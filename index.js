@@ -7,8 +7,8 @@ $.fn.equalizeHeights = function() {
 	return this.height( Math.max.apply(this, maxHeight) );
 };
 
-// Pulls "howMany" Dribbble shots for the user defined in DRIBBBLE_USERNAME. Depends on equalizeHeights().
-$.fn.dribbblesPlease = function(howMany) {
+// Pulls "howMany" Dribbble shots for the user defined in DRIBBBLE_USERNAME. Also accepts an optional callback function with custom styling. function(imageUrl, url, title). Depends on equalizeHeights(). 
+$.fn.dribbblesPlease = function(howMany, callback) {
 	var self = this;
 	var shots = [];
 
@@ -20,7 +20,13 @@ $.fn.dribbblesPlease = function(howMany) {
 		success: function(data) {
 			for(var i = 0; i < data.shots.length; i++) {
 				var current = data.shots[i];
-				shots.push(constructShot(current.image_400_url || current.image_url, current.url, current.title));
+
+				if(callback) {
+					shots.push(callback(current.image_400_url || current.image_url, current.url, current.title));
+				}
+				else {
+					shots.push(constructShot(current.image_400_url || current.image_url, current.url, current.title));
+				}
 			}
 
 			function constructShot(imageUrl, url, title) {

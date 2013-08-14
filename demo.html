@@ -17,6 +17,15 @@
 	<script>
 		var DRIBBBLE_USERNAME = "simplebits";
 		$("#js-dribbbles").dribbblesPlease(5);
+
+		$("#js-dribbbles").dribbblesPlease(5, function customFormat(imageUrl, url, title) {
+			// This is actually the default styling but you have the option to change it if you so desire.
+			var output = "<li class='shot'>";
+			output += "<a href='" + url + "'>";
+			output += "<img src='" + imageUrl + "' title='" + title + "'>";
+			output += "<div class='shot-title'>" + title + "</div></a></li>";
+			return output;
+		});
 	</script>
 </body>
 </html>
